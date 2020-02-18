@@ -1,0 +1,19 @@
+// File name: projects/03/a/Inc.hdl
+
+CHIP Inc {
+    IN in[16],inc;
+    OUT out[16];
+
+    PARTS:
+    // Put your code here:
+	Mux16(sel=inc, a[0]=in[0], b[0]=rout0, out[0]=m0, a[1]=in[1], b[1]=rout1, out[1]=m1, a[2]=in[2], b[2]=rout2, out[2]=m2, a[3]=in[3], b[3]=rout3, out[3]=m3, a[4]=in[4], b[4]=rout5, out[4]=m4, a[5]=in[5], b[5]=rout5, out[5]=m5, a[6]=in[6], b[6]=rout6, out[6]=m6, a[7]=in[7], b[7]=rout7, out[7]=m7, a[8]=in[8], b[8]=rout8, out[8]=m8, a[9]=in[9], b[9]=rout9, out[9]=m9, a[10]=in[10], b[10]=rout10, out[10]=m10, a[11]=in[11], b[11]=rout11, out[11]=m11, a[12]=in[12], b[12]=rout12, out[12]=m12, a[13]=in[13], b[13]=rout13, out[13]=m13, a[14]=in[14], b[14]=rout14, out[14]=m14, a[15]=in[15], b[15]=rout15, out[15]=m15);
+	
+	Add16(a[0]=rout0, b[0]=inc, out[0]=s0, a[1]=rout1, b[1]=false, out[1]=s1, a[2]=rout2, b[2]=false, out[2]=s2,  a[3]=rout3, b[3]=false, out[3]=s3, a[4]=rout4, b[4]=false, out[4]=s4, a[5]=rout5, b[5]=false, out[5]=s5,  a[6]=rout6, b[6]=false, out[6]=s6,  a[7]=rout7, b[7]=false, out[7]=s7,  a[8]=rout8, b[8]=false, out[8]=s8,  a[9]=rout9, b[9]=false, out[9]=s9,  a[10]=rout10, b[10]=false, out[10]=s10,  a[11]=rout11, b[11]=false, out[11]=s11,  a[12]=rout12, b[12]=false, out[12]=s12,  a[13]=rout13, b[13]=false, out[13]=s13,  a[14]=rout14, b[14]=false, out[14]=s14,  a[15]=rout15, b[15]=false, out[15]=s15);
+	
+	Register(load=inc, in[0]=s0, out[0]=rout0, out[0]=out[0], in[1]=s1, out[1]=rout1, out[1]=out[1], in[2]=s2, out[2]=rout2, out[2]=out[2], in[3]=s3, out[3]=rout3, out[3]=out[3], in[4]=s4, out[4]=rout4, out[4]=out[4], in[5]=s5, out[5]=rout5, out[5]=out[5], in[6]=s6, out[6]=rout6, out[6]=out[6], in[7]=s7, out[7]=rout7, out[7]=out[7], in[8]=s8, out[8]=rout8, out[8]=out[8], in[9]=s9, out[9]=rout9, out[9]=out[9], in[10]=s10, out[10]=rout10, out[10]=out[10], in[11]=s11, out[11]=rout11, out[11]=out[11], in[12]=s12, out[12]=rout12, out[12]=out[12], in[13]=s13, out[13]=rout13, out[13]=out[13], in[14]=s14, out[14]=rout14, out[14]=out[14], in[15]=s15, out[15]=rout15, out[15]=out[15]);
+	
+	//Register(load=inc, in[0]=m0, out[0]=rout0, in[1]=m1, out[1]=rout1, in[2]=m2, out[2]=rout2, in[3]=m3, out[3]=rout3, in[4]=m4, out[4]=rout4, in[5]=m5, out[5]=rout5, in[6]=m6, out[6]=rout6, in[7]=m7, out[7]=rout7, in[8]=m8, out[8]=rout8, in[9]=m9, out[9]=rout9, in[10]=m10, out[10]=rout10, in[11]=m11, out[11]=rout11, in[12]=m12, out[12]=rout12, in[13]=m13, out[13]=rout13, in[14]=m14, out[14]=rout14, in[15]=m15, out[15]=rout15);
+	
+	//Add16(a[0]=rout0, b[0]=inc, out[0]=s0, out[0]=out[0], a[1]=rout1, b[1]=false, out[1]=s1, out[1]=out[1], a[2]=rout2, b[2]=false, out[2]=s2, out[2]=out[2], a[3]=rout3, b[3]=false, out[3]=s3, out[3]=out[3], a[4]=rout4, b[4]=false, out[4]=s4, out[4]=out[4], a[5]=rout5, b[5]=false, out[5]=s5, out[5]=out[5], a[6]=rout6, b[6]=false, out[6]=s6, out[6]=out[6], a[7]=rout7, b[7]=false, out[7]=s7, out[7]=out[7], a[8]=rout8, b[8]=false, out[8]=s8, out[8]=out[8], a[9]=rout9, b[9]=false, out[9]=s9, out[9]=out[9], a[10]=rout10, b[10]=false, out[10]=s10, out[10]=out[10], a[11]=rout11, b[11]=false, out[11]=s11, out[11]=out[11], a[12]=rout12, b[12]=false, out[12]=s12, out[12]=out[12], a[13]=rout13, b[13]=false, out[13]=s13, out[13]=out[13], a[14]=rout14, b[14]=false, out[14]=s14, out[14]=out[14], a[15]=rout15, b[15]=false, out[15]=s15, out[15]=out[15]);
+	
+}

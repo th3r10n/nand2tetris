@@ -1,0 +1,42 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/03/a/RAM8.hdl
+
+/**
+ * Memory of 8 registers, each 16 bit-wide. Out holds the value
+ * stored at the memory location specified by address. If load==1, then 
+ * the in value is loaded into the memory location specified by address 
+ * (the loaded value will be emitted to out from the next time step onward).
+ */
+
+CHIP RAM8-v2 {
+    IN in[16], load, address[3];
+    OUT out[16];
+
+    PARTS:
+    // Put your code here:
+	DMux8Way16(sel[0]=address[0], sel[1]=address[1], sel[2]=address[2], in[0]=in[0], a[0]=a0, b[0]=b0, c[0]=c0, d[0]=d0, e[0]=e0, f[0]=f0, g[0]=g0, h[0]=h0, in[1]=in[1], a[1]=a1, b[1]=b1, c[1]=c1, d[1]=d1, e[1]=e1, f[1]=f1, g[1]=g1, h[1]=h1, in[2]=in[2], a[2]=a2, b[2]=b2, c[2]=c2, d[2]=d2, e[2]=e2, f[2]=f2, g[2]=g2, h[2]=h2, in[3]=in[3], a[3]=a3, b[3]=b3, c[3]=c3, d[3]=d3, e[3]=e3, f[3]=f3, g[3]=g3, h[3]=h3, in[4]=in[4], a[4]=a4, b[4]=b4, c[4]=c4, d[4]=d4, e[4]=e4, f[4]=f4, g[4]=g4, h[4]=h4, in[5]=in[5], a[5]=a5, b[5]=b5, c[5]=c5, d[5]=d5, e[5]=e5, f[5]=f5, g[5]=g5, h[5]=h5, in[6]=in[6], a[6]=a6, b[6]=b6, c[6]=c6, d[6]=d6, e[6]=e6, f[6]=f6, g[6]=g6, h[6]=h6, in[7]=in[7], a[7]=a7, b[7]=b7, c[7]=c7, d[7]=d7, e[7]=e7, f[7]=f7, g[7]=g7, h[7]=h7, in[8]=in[8], a[8]=a8, b[8]=b8, c[8]=c8, d[8]=d8, e[8]=e8, f[8]=f8, g[8]=g8, h[8]=h8, in[9]=in[9], a[9]=a9, b[9]=b9, c[9]=c9, d[9]=d9, e[9]=e9, f[9]=f9, g[9]=g9, h[9]=h9, in[10]=in[10], a[10]=a10, b[10]=b10, c[10]=c10, d[10]=d10, e[10]=e10, f[10]=f10, g[10]=g10, h[10]=h10, in[11]=in[11], a[11]=a11, b[11]=b11, c[11]=c11, d[11]=d11, e[11]=e11, f[11]=f11, g[11]=g11, h[11]=h11, in[12]=in[12], a[12]=a12, b[12]=b12, c[12]=c12, d[12]=d12, e[12]=e12, f[12]=f12, g[12]=g12, h[12]=h12, in[13]=in[13], a[13]=a13, b[13]=b13, c[13]=c13, d[13]=d13, e[13]=e13, f[13]=f13, g[13]=g13, h[13]=h13, in[14]=in[14], a[14]=a14, b[14]=b14, c[14]=c14, d[14]=d14, e[14]=e14, f[14]=f14, g[14]=g14, h[14]=h14, in[15]=in[15], a[15]=a15, b[15]=b15, c[15]=c15, d[15]=d15, e[15]=e15, f[15]=f15, g[15]=g15, h[15]=h15);
+	
+	// This Demultiplexor will set the load bit of the register based on the address
+	DMux8Way(sel[0]=address[0], sel[1]=address[1], sel[2]=address[2], in=load, a=loada, b=loadb, c=loadc, d=loadd, e=loade, f=loadf, g=loadg, h=loadh);
+	
+	Register(load=loada, in[0]=a0, out[0]=ra0, in[1]=a1, out[1]=ra1, in[2]=a2, out[2]=ra2, in[3]=a3, out[3]=ra3, in[4]=a4, out[4]=ra4, in[5]=a5, out[5]=ra5, in[6]=a6, out[6]=ra6, in[7]=a7, out[7]=ra7, in[8]=a8, out[8]=ra8, in[9]=a9, out[9]=ra9, in[10]=a10, out[10]=ra10, in[11]=a11, out[11]=ra11, in[12]=a12, out[12]=ra12, in[13]=a13, out[13]=ra13, in[14]=a14, out[14]=ra14, in[15]=a15, out[15]=ra15);
+	
+	Register(load=loadb, in[0]=b0, out[0]=rb0, in[1]=b1, out[1]=rb1, in[2]=b2, out[2]=rb2, in[3]=b3, out[3]=rb3, in[4]=b4, out[4]=rb4, in[5]=b5, out[5]=rb5, in[6]=b6, out[6]=rb6, in[7]=b7, out[7]=rb7, in[8]=b8, out[8]=rb8, in[9]=b9, out[9]=rb9, in[10]=b10, out[10]=rb10, in[11]=b11, out[11]=rb11, in[12]=b12, out[12]=rb12, in[13]=b13, out[13]=rb13, in[14]=b14, out[14]=rb14, in[15]=b15, out[15]=rb15);
+	
+	Register(load=loadc, in[0]=c0, out[0]=rc0, in[1]=c1, out[1]=rc1, in[2]=c2, out[2]=rc2, in[3]=c3, out[3]=rc3, in[4]=c4, out[4]=rc4, in[5]=c5, out[5]=rc5, in[6]=c6, out[6]=rc6, in[7]=c7, out[7]=rc7, in[8]=c8, out[8]=rc8, in[9]=c9, out[9]=rc9, in[10]=c10, out[10]=rc10, in[11]=c11, out[11]=rc11, in[12]=c12, out[12]=rc12, in[13]=c13, out[13]=rc13, in[14]=c14, out[14]=rc14, in[15]=c15, out[15]=rc15);
+	
+	Register(load=loadd, in[0]=d0, out[0]=rd0, in[1]=d1, out[1]=rd1, in[2]=d2, out[2]=rd2, in[3]=d3, out[3]=rd3, in[4]=d4, out[4]=rd4, in[5]=d5, out[5]=rd5, in[6]=d6, out[6]=rd6, in[7]=d7, out[7]=rd7, in[8]=d8, out[8]=rd8, in[9]=d9, out[9]=rd9, in[10]=d10, out[10]=rd10, in[11]=d11, out[11]=rd11, in[12]=d12, out[12]=rd12, in[13]=d13, out[13]=rd13, in[14]=d14, out[14]=rd14, in[15]=d15, out[15]=rd15);
+	
+	Register(load=loade, in[0]=e0, out[0]=re0, in[1]=e1, out[1]=re1, in[2]=e2, out[2]=re2, in[3]=e3, out[3]=re3, in[4]=e4, out[4]=re4, in[5]=e5, out[5]=re5, in[6]=e6, out[6]=re6, in[7]=e7, out[7]=re7, in[8]=e8, out[8]=re8, in[9]=e9, out[9]=re9, in[10]=e10, out[10]=re10, in[11]=e11, out[11]=re11, in[12]=e12, out[12]=re12, in[13]=e13, out[13]=re13, in[14]=e14, out[14]=re14, in[15]=e15, out[15]=re15);
+	
+	Register(load=loadf, in[0]=f0, out[0]=rf0, in[1]=f1, out[1]=rf1, in[2]=f2, out[2]=rf2, in[3]=f3, out[3]=rf3, in[4]=f4, out[4]=rf4, in[5]=f5, out[5]=rf5, in[6]=f6, out[6]=rf6, in[7]=f7, out[7]=rf7, in[8]=f8, out[8]=rf8, in[9]=f9, out[9]=rf9, in[10]=f10, out[10]=rf10, in[11]=f11, out[11]=rf11, in[12]=f12, out[12]=rf12, in[13]=f13, out[13]=rf13, in[14]=f14, out[14]=rf14, in[15]=f15, out[15]=rf15);
+	
+	Register(load=loadg, in[0]=g0, out[0]=rg0, in[1]=g1, out[1]=rg1, in[2]=g2, out[2]=rg2, in[3]=g3, out[3]=rg3, in[4]=g4, out[4]=rg4, in[5]=g5, out[5]=rg5, in[6]=g6, out[6]=rg6, in[7]=g7, out[7]=rg7, in[8]=g8, out[8]=rg8, in[9]=g9, out[9]=rg9, in[10]=g10, out[10]=rg10, in[11]=g11, out[11]=rg11, in[12]=g12, out[12]=rg12, in[13]=g13, out[13]=rg13, in[14]=g14, out[14]=rg14, in[15]=g15, out[15]=rg15);
+	
+	Register(load=loadh, in[0]=h0, out[0]=rh0, in[1]=h1, out[1]=rh1, in[2]=h2, out[2]=rh2, in[3]=h3, out[3]=rh3, in[4]=h4, out[4]=rh4, in[5]=h5, out[5]=rh5, in[6]=h6, out[6]=rh6, in[7]=h7, out[7]=rh7, in[8]=h8, out[8]=rh8, in[9]=h9, out[9]=rh9, in[10]=h10, out[10]=rh10, in[11]=h11, out[11]=rh11, in[12]=h12, out[12]=rh12, in[13]=h13, out[13]=rh13, in[14]=h14, out[14]=rh14, in[15]=h15, out[15]=rh15);
+	
+	Mux8Way16(sel[0]=address[0], sel[1]=address[1], sel[2]=address[2], a[0]=ra0, b[0]=rb0, c[0]=rc0, d[0]=rd0, e[0]=re0, f[0]=rf0, g[0]=rg0, h[0]=rh0, out[0]=out[0], a[1]=ra1, b[1]=rb1, c[1]=rc1, d[1]=rd1, e[1]=re1, f[1]=rf1, g[1]=rg1, h[1]=rh1, out[1]=out[1], a[2]=ra2, b[2]=rb2, c[2]=rc2, d[2]=rd2, e[2]=re2, f[2]=rf2, g[2]=rg2, h[2]=rh2, out[2]=out[2], a[3]=ra3, b[3]=rb3, c[3]=rc3, d[3]=rd3, e[3]=re3, f[3]=rf3, g[3]=rg3, h[3]=rh3, out[3]=out[3], a[4]=ra4, b[4]=rb4, c[4]=rc4, d[4]=rd4, e[4]=re4, f[4]=rf4, g[4]=rg4, h[4]=rh4, out[4]=out[4], a[5]=ra5, b[5]=rb5, c[5]=rc5, d[5]=rd5, e[5]=re5, f[5]=rf5, g[5]=rg5, h[5]=rh5, out[5]=out[5], a[6]=ra6, b[6]=rb6, c[6]=rc6, d[6]=rd6, e[6]=re6, f[6]=rf6, g[6]=rg6, h[6]=rh6, out[6]=out[6], a[7]=ra7, b[7]=rb7, c[7]=rc7, d[7]=rd7, e[7]=re7, f[7]=rf7, g[7]=rg7, h[7]=rh7, out[7]=out[7], a[8]=ra8, b[8]=rb8, c[8]=rc8, d[8]=rd8, e[8]=re8, f[8]=rf8, g[8]=rg8, h[8]=rh8, out[8]=out[8], a[9]=ra9, b[9]=rb9, c[9]=rc9, d[9]=rd9, e[9]=re9, f[9]=rf9, g[9]=rg9, h[9]=rh9, out[9]=out[9], a[10]=ra10, b[10]=rb10, c[10]=rc10, d[10]=rd10, e[10]=re10, f[10]=rf10, g[10]=rg10, h[10]=rh10, out[10]=out[10], a[11]=ra11, b[11]=rb11, c[11]=rc11, d[11]=rd11, e[11]=re11, f[11]=rf11, g[11]=rg11, h[11]=rh11, out[11]=out[11], a[12]=ra12, b[12]=rb12, c[12]=rc12, d[12]=rd12, e[12]=re12, f[12]=rf12, g[12]=rg12, h[12]=rh12, out[12]=out[12], a[13]=ra13, b[13]=rb13, c[13]=rc13, d[13]=rd13, e[13]=re13, f[13]=rf13, g[13]=rg13, h[13]=rh13, out[13]=out[13], a[14]=ra14, b[14]=rb14, c[14]=rc14, d[14]=rd14, e[14]=re14, f[14]=rf14, g[14]=rg14, h[14]=rh14, out[14]=out[14], a[15]=ra15, b[15]=rb15, c[15]=rc15, d[15]=rd15, e[15]=re15, f[15]=rf15, g[15]=rg15, h[15]=rh15, out[15]=out[15]);
+	
+}

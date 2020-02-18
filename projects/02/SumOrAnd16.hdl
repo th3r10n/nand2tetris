@@ -1,0 +1,24 @@
+// File name: projects/02/SumOrAnd16.hdl
+
+/**
+ * 
+ * for i = 0..15 out[i] = a[i] & b[i] if sel = 0 else out[i] = a[i] + b[i]
+ */
+
+CHIP SumOrAnd16 {
+    IN a[16], b[16], sel;
+    OUT out[16];
+
+    PARTS:
+    // Put your code here:
+	DMux16(sel=sel, in[0]=a[0], a[0]=a0, b[0]=b0, in[1]=a[1], a[1]=a1, b[1]=b1, in[2]=a[2], a[2]=a2, b[2]=b2, in[3]=a[3], a[3]=a3, b[3]=b3, in[4]=a[4], a[4]=a4, b[4]=b4, in[5]=a[5], a[5]=a5, b[5]=b5, in[6]=a[6], a[6]=a6, b[6]=b6, in[7]=a[7], a[7]=a7, b[7]=b7, in[8]=a[8], a[8]=a8, b[8]=b8, in[9]=a[9], a[9]=a9, b[9]=b9, in[10]=a[10], a[10]=a10, b[10]=b10, in[11]=a[11], a[11]=a11, b[11]=b11, in[12]=a[12], a[12]=a12, b[12]=b12, in[13]=a[13], a[13]=a13, b[13]=b13, in[14]=a[14], a[14]=a14, b[14]=b14, in[15]=a[15], a[15]=a15, b[15]=b15);
+	
+	DMux16(sel=sel, in[0]=b[0], a[0]=c0, b[0]=d0, in[1]=b[1], a[1]=c1, b[1]=d1, in[2]=b[2], a[2]=c2, b[2]=d2, in[3]=b[3], a[3]=c3, b[3]=d3, in[4]=b[4], a[4]=c4, b[4]=d4, in[5]=b[5], a[5]=c5, b[5]=d5, in[6]=b[6], a[6]=c6, b[6]=d6, in[7]=b[7], a[7]=c7, b[7]=d7, in[8]=b[8], a[8]=c8, b[8]=d8, in[9]=b[9], a[9]=c9, b[9]=d9, in[10]=b[10], a[10]=c10, b[10]=d10, in[11]=b[11], a[11]=c11, b[11]=d11, in[12]=b[12], a[12]=c12, b[12]=d12, in[13]=b[13], a[13]=c13, b[13]=d13, in[14]=b[14], a[14]=c14, b[14]=d14, in[15]=b[15], a[15]=c15, b[15]=d15);
+	
+	And16(a[0]=a0, b[0]=c0, out[0]=and0, a[1]=a1, b[1]=c1, out[1]=and1, a[2]=a2, b[2]=c2, out[2]=and2, a[3]=a3, b[3]=c3, out[3]=and3, a[4]=a4, b[4]=c4, out[4]=and4, a[5]=a5, b[5]=c5, out[5]=and5, a[6]=a6, b[6]=c6, out[6]=and6, a[7]=a7, b[7]=c7, out[7]=and7, a[8]=a8, b[8]=c8, out[8]=and8, a[9]=a9, b[9]=c9, out[9]=and9, a[10]=a10, b[10]=c10, out[10]=and10, a[11]=a11, b[11]=c11, out[11]=and11, a[12]=a12, b[12]=c12, out[12]=and12, a[13]=a13, b[13]=c13, out[13]=and13, a[14]=a14, b[14]=c14, out[14]=and14, a[15]=a15, b[15]=c15, out[15]=and15);
+	
+	Add16(a[0]=b0, b[0]=d0, out[0]=sum0, a[1]=b1, b[1]=d1, out[1]=sum1, a[2]=b2, b[2]=d2, out[2]=sum2, a[3]=b3, b[3]=d3, out[3]=sum3, a[4]=b4, b[4]=d4, out[4]=sum4, a[5]=b5, b[5]=d5, out[5]=sum5, a[6]=b6, b[6]=d6, out[6]=sum6, a[7]=b7, b[7]=d7, out[7]=sum7, a[8]=b8, b[8]=d8, out[8]=sum8, a[9]=b9, b[9]=d9, out[9]=sum9, a[10]=b10, b[10]=d10, out[10]=sum10, a[11]=b11, b[11]=d11, out[11]=sum11, a[12]=b12, b[12]=d12, out[12]=sum12, a[13]=b13, b[13]=d13, out[13]=sum13, a[14]=b14, b[14]=d14, out[14]=sum14, a[15]=b15, b[15]=d15, out[15]=sum15);
+	
+	Mux16(sel=sel, a[0]=and0, b[0]=sum0, out[0]=out[0], a[1]=and1, b[1]=sum1, out[1]=out[1], a[2]=and2, b[2]=sum2, out[2]=out[2], a[3]=and3, b[3]=sum3, out[3]=out[3], a[4]=and4, b[4]=sum4, out[4]=out[4], a[5]=and5, b[5]=sum5, out[5]=out[5], a[6]=and6, b[6]=sum6, out[6]=out[6], a[7]=and7, b[7]=sum7, out[7]=out[7], a[8]=and8, b[8]=sum8, out[8]=out[8], a[9]=and9, b[9]=sum9, out[9]=out[9], a[10]=and10, b[10]=sum10, out[10]=out[10], a[11]=and11, b[11]=sum11, out[11]=out[11], a[12]=and12, b[12]=sum12, out[12]=out[12], a[13]=and13, b[13]=sum13, out[13]=out[13], a[14]=and14, b[14]=sum14, out[14]=out[14], a[15]=and15, b[15]=sum15, out[15]=out[15]);
+	
+}

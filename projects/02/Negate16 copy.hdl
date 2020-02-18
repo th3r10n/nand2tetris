@@ -1,0 +1,62 @@
+// File name: projects/02/Zero16.hdl
+
+/**
+ * 16-bit zeroing:
+ * for i = 0..15 out[i] = in[i] if sel = 0 else out[i] = 0
+ */
+
+CHIP Zero16 {
+    IN in[16], sel;
+    OUT out[16];
+
+    PARTS:
+    // Put your code here:
+	DMux(in=in[0], sel=sel, a=a0, b=b0);
+	Xor(a=b0, b=b0, out=out0);
+	Mux(a=a0, b=out0, sel=sel, out=out[0]);
+	DMux(in=in[1], sel=sel, a=a1, b=b1);
+	Xor(a=b1, b=b1, out=out1);
+	Mux(a=a1, b=out1, sel=sel, out=out[1]);
+	DMux(in=in[2], sel=sel, a=a2, b=b2);
+	Xor(a=b2, b=b2, out=out2);
+	Mux(a=a2, b=out2, sel=sel, out=out[2]);
+	DMux(in=in[3], sel=sel, a=a3, b=b3);
+	Xor(a=b3, b=b3, out=out3);
+	Mux(a=a3, b=out3, sel=sel, out=out[3]);
+	DMux(in=in[4], sel=sel, a=a4, b=b4);
+	Xor(a=b4, b=b4, out=out4);
+	Mux(a=a4, b=out4, sel=sel, out=out[4]);
+	DMux(in=in[5], sel=sel, a=a5, b=b5);
+	Xor(a=b5, b=b5, out=out5);
+	Mux(a=a5, b=out5, sel=sel, out=out[5]);
+	DMux(in=in[6], sel=sel, a=a6, b=b6);
+	Xor(a=b6, b=b6, out=out6);
+	Mux(a=a6, b=out6, sel=sel, out=out[6]);
+	DMux(in=in[7], sel=sel, a=a7, b=b7);
+	Xor(a=b7, b=b7, out=out7);
+	Mux(a=a7, b=out7, sel=sel, out=out[7]);
+	DMux(in=in[8], sel=sel, a=a8, b=b8);
+	Xor(a=b8, b=b8, out=out8);
+	Mux(a=a8, b=out8, sel=sel, out=out[8]);
+	DMux(in=in[9], sel=sel, a=a9, b=b9);
+	Xor(a=b9, b=b9, out=out9);
+	Mux(a=a9, b=out9, sel=sel, out=out[9]);
+	DMux(in=in[10], sel=sel, a=a10, b=b10);
+	Xor(a=b10, b=b10, out=out10);
+	Mux(a=a10, b=out10, sel=sel, out=out[10]);
+	DMux(in=in[11], sel=sel, a=a11, b=b11);
+	Xor(a=b11, b=b11, out=out11);
+	Mux(a=a11, b=out11, sel=sel, out=out[11]);
+	DMux(in=in[12], sel=sel, a=a12, b=b12);
+	Xor(a=b12, b=b12, out=out12);
+	Mux(a=a12, b=out12, sel=sel, out=out[12]);
+	DMux(in=in[13], sel=sel, a=a13, b=b13);
+	Xor(a=b13, b=b13, out=out13);
+	Mux(a=a13, b=out13, sel=sel, out=out[13]);
+	DMux(in=in[14], sel=sel, a=a14, b=b14);
+	Xor(a=b14, b=b14, out=out14);
+	Mux(a=a14, b=out14, sel=sel, out=out[14]);
+	DMux(in=in[15], sel=sel, a=a15, b=b15);
+	Xor(a=b15, b=b15, out=out15);
+	Mux(a=a15, b=out15, sel=sel, out=out[15]);
+}

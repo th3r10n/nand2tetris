@@ -1,0 +1,71 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/02/ALU.hdl
+
+/**
+ * The ALU (Arithmetic Logic Unit).
+ * Computes one of the following functions:
+ * x+y, x-y, y-x, 0, 1, -1, x, y, -x, -y, !x, !y,
+ * x+1, y+1, x-1, y-1, x&y, x|y on two 16-bit inputs, 
+ * according to 6 input bits denoted zx,nx,zy,ny,f,no.
+ * In addition, the ALU computes two 1-bit outputs:
+ * if the ALU output == 0, zr is set to 1; otherwise zr is set to 0;
+ * if the ALU output < 0, ng is set to 1; otherwise ng is set to 0.
+ */
+
+// Implementation: the ALU logic manipulates the x and y inputs
+// and operates on the resulting values, as follows:
+// if (zx == 1) set x = 0        // 16-bit constant
+// if (nx == 1) set x = !x       // bitwise not
+// if (zy == 1) set y = 0        // 16-bit constant
+// if (ny == 1) set y = !y       // bitwise not
+// if (f == 1)  set out = x + y  // integer 2's complement addition
+// if (f == 0)  set out = x & y  // bitwise and
+// if (no == 1) set out = !out   // bitwise not
+// if (out == 0) set zr = 1
+// if (out < 0) set ng = 1
+
+CHIP ALU {
+    IN  
+        x[16], y[16],  // 16-bit inputs        
+        zx, // zero the x input?
+        nx, // negate the x input?
+        zy, // zero the y input?
+        ny, // negate the y input?
+        f,  // compute out = x + y (if 1) or x & y (if 0)
+        no; // negate the out output?
+
+    OUT 
+        out[16], // 16-bit output
+        zr, // 1 if (out == 0), 0 otherwise
+        ng; // 1 if (out < 0),  0 otherwise
+
+    PARTS:
+   // Put you code here:
+   // Preset the x input
+   Zero16(sel=zx, in[0]=x[0], out[0]=zx0, in[1]=x[1], out[1]=zx1, in[2]=x[2], out[2]=zx2, in[3]=x[3], out[3]=zx3, in[4]=x[4], out[4]=zx4, in[5]=x[5], out[5]=zx5, in[6]=x[6], out[6]=zx6, in[7]=x[7], out[7]=zx7, in[8]=x[8], out[8]=zx8, in[9]=x[9], out[9]=zx9, in[10]=x[10], out[10]=zx10, in[11]=x[11], out[11]=zx11, in[12]=x[12], out[12]=zx12, in[13]=x[13], out[13]=zx13, in[14]=x[14], out[14]=zx14, in[15]=x[15], out[15]=zx15);
+   
+   Negate16(sel=nx, in[0]=zx0, out[0]=nx0, in[1]=zx1, out[1]=nx1, in[2]=zx2, out[2]=nx2, in[3]=zx3, out[3]=nx3, in[4]=zx4, out[4]=nx4, in[5]=zx5, out[5]=nx5, in[6]=zx6, out[6]=nx6, in[7]=zx7, out[7]=nx7, in[8]=zx8, out[8]=nx8, in[9]=zx9, out[9]=nx9, in[10]=zx10, out[10]=nx10, in[11]=zx11, out[11]=nx11, in[12]=zx12, out[12]=nx12, in[13]=zx13, out[13]=nx13, in[14]=zx14, out[14]=nx14, in[15]=zx15, out[15]=nx15);
+   
+   // Preset the y input
+   Zero16(sel=zy, in[0]=y[0], out[0]=zy0, in[1]=y[1], out[1]=zy1, in[2]=y[2], out[2]=zy2, in[3]=y[3], out[3]=zy3, in[4]=y[4], out[4]=zy4, in[5]=y[5], out[5]=zy5, in[6]=y[6], out[6]=zy6, in[7]=y[7], out[7]=zy7, in[8]=y[8], out[8]=zy8, in[9]=y[9], out[9]=zy9, in[10]=y[10], out[10]=zy10, in[11]=y[11], out[11]=zy11, in[12]=y[12], out[12]=zy12, in[13]=y[13], out[13]=zy13, in[14]=y[14], out[14]=zy14, in[15]=y[15], out[15]=zy15);
+   
+   Negate16(sel=ny, in[0]=zy0, out[0]=ny0, in[1]=zy1, out[1]=ny1, in[2]=zy2, out[2]=ny2, in[3]=zy3, out[3]=ny3, in[4]=zy4, out[4]=ny4, in[5]=zy5, out[5]=ny5, in[6]=zy6, out[6]=ny6, in[7]=zy7, out[7]=ny7, in[8]=zy8, out[8]=ny8, in[9]=zy9, out[9]=ny9, in[10]=zy10, out[10]=ny10, in[11]=zy11, out[11]=ny11, in[12]=zy12, out[12]=ny12, in[13]=zy13, out[13]=ny13, in[14]=zy14, out[14]=ny14, in[15]=zy15, out[15]=ny15);
+   
+   // Sum or And the preset x and y inputs
+   SumOrAnd16(sel=f, a[0]=nx0, b[0]=ny0, out[0]=sum0 , a[1]=nx1, b[1]=ny1, out[1]=sum1 , a[2]=nx2, b[2]=ny2, out[2]=sum2 , a[3]=nx3, b[3]=ny3, out[3]=sum3 , a[4]=nx4, b[4]=ny4, out[4]=sum4 , a[5]=nx5, b[5]=ny5, out[5]=sum5 , a[6]=nx6, b[6]=ny6, out[6]=sum6 , a[7]=nx7, b[7]=ny7, out[7]=sum7 , a[8]=nx8, b[8]=ny8, out[8]=sum8 , a[9]=nx9, b[9]=ny9, out[9]=sum9 , a[10]=nx10, b[10]=ny10, out[10]=sum10 , a[11]=nx11, b[11]=ny11, out[11]=sum11 , a[12]=nx12, b[12]=ny12, out[12]=sum12 , a[13]=nx13, b[13]=ny13, out[13]=sum13 , a[14]=nx14, b[14]=ny14, out[14]=sum14 , a[15]=nx15, b[15]=ny15, out[15]=sum15);
+   
+   // Negate the output 
+   Negate16(sel=no, in[0]=sum0, out[0]=out[0], out[0]=out0, in[1]=sum1, out[1]=out[1], out[1]=out1, in[2]=sum2, out[2]=out[2], out[2]=out2, in[3]=sum3, out[3]=out[3], out[3]=out3, in[4]=sum4, out[4]=out[4], out[4]=out4, in[5]=sum5, out[5]=out[5], out[5]=out5, in[6]=sum6, out[6]=out[6], out[6]=out6, in[7]=sum7, out[7]=out[7], out[7]=out7, in[8]=sum8, out[8]=out[8], out[8]=out8, in[9]=sum9, out[9]=out[9], out[9]=out9, in[10]=sum10, out[10]=out[10], out[10]=out10, in[11]=sum11, out[11]=out[11], out[11]=out11, in[12]=sum12, out[12]=out[12], out[12]=out12, in[13]=sum13, out[13]=out[13], out[13]=out13, in[14]=sum14, out[14]=out[14], out[14]=out14, in[15]=sum15, out[15]=out[15], out[15]=out15);
+   
+   Mux(sel=out15, a=false, b=true, out=ng);
+   
+   Or8Way(in[0]=out0, in[1]=out1, in[2]=out2, in[3]=out3, in[4]=out4, in[5]=out5, in[6]=out6, in[7]=out7, out=w1);
+   
+   Or8Way(in[0]=out8, in[1]=out9, in[2]=out10, in[3]=out11, in[4]=out12, in[5]=out13, in[6]=out14, in[7]=out15, out=w2);
+   
+   Or(a=w1, b=w2, out=w);
+   
+   Mux(sel=w, a=true, b=false, out=zr);
+}

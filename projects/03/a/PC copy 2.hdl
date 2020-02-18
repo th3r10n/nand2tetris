@@ -1,0 +1,38 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/03/a/PC.hdl
+
+/**
+ * A 16-bit counter with load and reset control bits.
+ * if      (reset[t] == 1) out[t+1] = 0
+ * else if (load[t] == 1)  out[t+1] = in[t]
+ * else if (inc[t] == 1)   out[t+1] = out[t] + 1  (integer addition)
+ * else                    out[t+1] = out[t]
+ */
+
+CHIP PC {
+    IN in[16],load,inc,reset;
+    OUT out[16];
+
+    PARTS:
+    // Put your code here:
+	DMux16(sel=reset, in[0]=in[0], a[0]=a0, b[0]=b0, in[1]=in[1], a[1]=a1, b[1]=b1,in[2]=in[2], a[2]=a2, b[2]=b2,in[3]=in[3], a[3]=a3, b[3]=b3,in[4]=in[4], a[4]=a4, b[4]=b4,in[5]=in[5], a[5]=a5, b[5]=b5,in[6]=in[6], a[6]=a6, b[6]=b6,in[7]=in[7], a[7]=a7, b[7]=b7,in[8]=in[8], a[8]=a8, b[8]=b8,in[9]=in[9], a[9]=a9, b[9]=b9,in[10]=in[10], a[10]=a10, b[10]=b10,in[11]=in[11], a[11]=a11, b[11]=b11,in[12]=in[12], a[12]=a12, b[12]=b12,in[13]=in[13], a[13]=a13, b[13]=b13,in[14]=in[14], a[14]=a14, b[14]=b14,in[15]=in[15], a[15]=a15, b[15]=b15);
+	
+	Zero16(sel=reset, in[0]=b0, out[0]=z0,in[1]=b1, out[1]=z1,in[2]=b2, out[2]=z2,in[3]=b3, out[3]=z3,in[4]=b4, out[4]=z4,in[5]=b5, out[5]=z5,in[6]=b6, out[6]=z6,in[7]=b7, out[7]=z7,in[8]=b8, out[8]=z8,in[9]=b9, out[9]=z9,in[10]=b10, out[10]=z10,in[11]=b11, out[11]=z11,in[12]=b12, out[12]=z12,in[13]=b13, out[13]=z13,in[14]=b14, out[14]=z14,in[15]=b15, out[15]=z15);
+	
+	Mux16(sel=reset, a[0]=a0, b[0]=z0, out[0]=m0, a[1]=a1, b[1]=z1, out[1]=m1, a[2]=a2, b[2]=z2, out[2]=m2, a[3]=a3, b[3]=z3, out[3]=m3, a[4]=a4, b[4]=z4, out[4]=m4, a[5]=a5, b[5]=z5, out[5]=m5, a[6]=a6, b[6]=z6, out[6]=m6, a[7]=a7, b[7]=z7, out[7]=m7, a[8]=a8, b[8]=z8, out[8]=m8, a[9]=a9, b[9]=z9, out[9]=m9, a[10]=a10, b[10]=z10, out[10]=m10, a[11]=a11, b[11]=z11, out[11]=m11, a[12]=a12, b[12]=z12, out[12]=m12, a[13]=a13, b[13]=z13, out[13]=m13, a[14]=a14, b[14]=z14, out[14]=m14, a[15]=a15, b[15]=z15, out[15]=m15);
+	
+	Or(a=reset, b=load, out=w1);
+	Or(a=w1, b=inc, out=w2);
+	Not(in=w1, out=w3);
+	And(a=w3, b=inc, out=w4);
+	
+	Mux16(sel=w2, a[0]=m0, b[0]=s0, out[k]=nk, )
+	
+	Register(load=w2, in[0]=m0, out[0]=out[0], in[1]=m1, out[1]=out[1], in[2]=m2, out[2]=out[2], in[3]=m3, out[3]=out[3], in[4]=m4, out[4]=out[4], in[5]=m5, out[5]=out[5], in[6]=m6, out[6]=out[6], in[7]=m7, out[7]=out[7], in[8]=m8, out[8]=out[8], in[9]=m9, out[9]=out[9], in[10]=m10, out[10]=out[10], in[11]=m11, out[11]=out[11], in[12]=m12, out[12]=out[12], in[13]=m13, out[13]=out[13], in[14]=m14, out[14]=out[14], in[15]=m15, out[15]=out[15]);
+	
+	
+	
+	//DMux16(sel=reset, in[0]=in[0], a[0]=a0, b[0]=b0, )
+}

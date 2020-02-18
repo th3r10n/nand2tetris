@@ -1,0 +1,128 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/01/Mux16.hdl
+
+/**
+ * 16-bit multiplexor: 
+ * for i = 0..15 out[i] = a[i] if sel == 0 
+ *                        b[i] if sel == 1
+ */
+
+CHIP Mux16 {
+    IN a[16], b[16], sel;
+    OUT out[16];
+
+    PARTS:
+    // Put your code here:
+	// Bus 0
+	Not(in=sel, out=w10);
+	And(a=a[0], b=w10, out=w20);
+	And(a=b[0], b=sel, out=w30);
+	Or(a=w20, b=w30, out=out[0]);
+
+
+	// Bus 1
+	Not(in=sel, out=w11);
+	And(a=a[1], b=w11, out=w21);
+	And(a=b[1], b=sel, out=w31);
+	Or(a=w21, b=w31, out=out[1]);
+
+
+	// Bus 2
+	Not(in=sel, out=w12);
+	And(a=a[2], b=w12, out=w22);
+	And(a=b[2], b=sel, out=w32);
+	Or(a=w22, b=w32, out=out[2]);
+
+
+	// Bus 3
+	Not(in=sel, out=w13);
+	And(a=a[3], b=w13, out=w23);
+	And(a=b[3], b=sel, out=w33);
+	Or(a=w23, b=w33, out=out[3]);
+
+
+	// Bus 4
+	Not(in=sel, out=w14);
+	And(a=a[4], b=w14, out=w24);
+	And(a=b[4], b=sel, out=w34);
+	Or(a=w24, b=w34, out=out[4]);
+
+
+	// Bus 5
+	Not(in=sel, out=w15);
+	And(a=a[5], b=w15, out=w25);
+	And(a=b[5], b=sel, out=w35);
+	Or(a=w25, b=w35, out=out[5]);
+
+
+	// Bus 6
+	Not(in=sel, out=w16);
+	And(a=a[6], b=w16, out=w26);
+	And(a=b[6], b=sel, out=w36);
+	Or(a=w26, b=w36, out=out[6]);
+
+
+	// Bus 7
+	Not(in=sel, out=w17);
+	And(a=a[7], b=w17, out=w27);
+	And(a=b[7], b=sel, out=w37);
+	Or(a=w27, b=w37, out=out[7]);
+
+
+	// Bus 8
+	Not(in=sel, out=w18);
+	And(a=a[8], b=w18, out=w28);
+	And(a=b[8], b=sel, out=w38);
+	Or(a=w28, b=w38, out=out[8]);
+
+
+	// Bus 9
+	Not(in=sel, out=w19);
+	And(a=a[9], b=w19, out=w29);
+	And(a=b[9], b=sel, out=w39);
+	Or(a=w29, b=w39, out=out[9]);
+
+
+	// Bus 10
+	Not(in=sel, out=w110);
+	And(a=a[10], b=w110, out=w210);
+	And(a=b[10], b=sel, out=w310);
+	Or(a=w210, b=w310, out=out[10]);
+
+
+	// Bus 11
+	Not(in=sel, out=w111);
+	And(a=a[11], b=w111, out=w211);
+	And(a=b[11], b=sel, out=w311);
+	Or(a=w211, b=w311, out=out[11]);
+
+
+	// Bus 12
+	Not(in=sel, out=w112);
+	And(a=a[12], b=w112, out=w212);
+	And(a=b[12], b=sel, out=w312);
+	Or(a=w212, b=w312, out=out[12]);
+
+
+	// Bus 13
+	Not(in=sel, out=w113);
+	And(a=a[13], b=w113, out=w213);
+	And(a=b[13], b=sel, out=w313);
+	Or(a=w213, b=w313, out=out[13]);
+
+
+	// Bus 14
+	Not(in=sel, out=w114);
+	And(a=a[14], b=w114, out=w214);
+	And(a=b[14], b=sel, out=w314);
+	Or(a=w214, b=w314, out=out[14]);
+
+
+	// Bus 15
+	Not(in=sel, out=w115);
+	And(a=a[15], b=w115, out=w215);
+	And(a=b[15], b=sel, out=w315);
+	Or(a=w215, b=w315, out=out[15]);
+}
