@@ -12,3 +12,31 @@
 // the screen should remain fully clear as long as no key is pressed.
 
 // Put your code here.
+
+// SCREEN = RAM[16384]
+// KBD = RAM[24576]
+
+@i
+M = 0 // i = 0
+
+(LOOP)
+@i
+D = M // D = i
+@8192
+D = A - D // 8192 - i
+@END
+D;JLE
+
+@i
+D = M // D = i
+@SCREEN
+A = A + D // A + i
+M = 1
+@i
+M = M + 1 // i = i + 1 
+@LOOP
+0;JMP
+
+(END)
+@END
+0;JMP
