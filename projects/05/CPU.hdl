@@ -40,4 +40,36 @@ CHIP CPU {
 
     PARTS:
     // Put your code here:
+    Not(in=instruction[15], out=not0);
+    And(a=instruction[15], b=instruction[5], out=and1);
+    Not(in=and1, out=notand1);
+    Or(a=not0, b=notand1, out=msel);
+    
+    Mux16(a[0]=u0,a[1]=u1,a[2]=u2,a[3]=u3,a[4]=u4,a[5]=u5,a[6]=u6,a[7]=u7,a[8]=u8,a[9]=u9,a[10]=u10,a[11]=u11,a[12]=u12,a[13]=u13,a[14]=u14,a[15]=u15, b[0]=instruction[0],b[1]=instruction[1],b[2]=instruction[2],b[3]=instruction[3],b[4]=instruction[4],b[5]=instruction[5],b[6]=instruction[6],b[7]=instruction[7],b[8]=instruction[8],b[9]=instruction[9],b[10]=instruction[10],b[11]=instruction[11],b[12]=instruction[12],b[13]=instruction[13],b[14]=instruction[14],b[15]=instruction[15], sel=msel, out[0]=m0,out[1]=m1,out[2]=m2,out[3]=m3,out[4]=m4,out[5]=m5,out[6]=m6,out[7]=m7,out[8]=m8,out[9]=m9,out[10]=m10,out[11]=m11,out[12]=m12,out[13]=m13,out[14]=m14,out[15]=m15);
+    
+    //Or(a=not0, b=instruction[3], out=asel);
+    //Xor(a=not0, b=instruction[3], out=asel);
+    // instruction[15]' + instruction[15]*instruction[12]
+    Not(in=instruction[15], out=not15);
+    //And(a=instruction[15], b=instruction[12], out=and0);
+    And(a=instruction[15], b=instruction[5], out=and0);
+    Or(a=not15, b=and0, out=asel);
+
+    ARegister(in[0]=m0,in[1]=m1,in[2]=m2,in[3]=m3,in[4]=m4,in[5]=m5,in[6]=m6,in[7]=m7,in[8]=m8,in[9]=m9,in[10]=m10,in[11]=m11,in[12]=m12,in[13]=m13,in[14]=m14,in[15]=m15, load=asel, out[0]=a0,out[1]=a1,out[2]=a2,out[3]=a3,out[4]=a4,out[5]=a5,out[6]=a6,out[7]=a7,out[8]=a8,out[9]=a9,out[10]=a10,out[11]=a11,out[12]=a12,out[13]=a13,out[14]=a14,out[15]=a15,out[0]=addressM[0],out[1]=addressM[1],out[2]=addressM[2],out[3]=addressM[3],out[4]=addressM[4],out[5]=addressM[5],out[6]=addressM[6],out[7]=addressM[7],out[8]=addressM[8],out[9]=addressM[9],out[10]=addressM[10],out[11]=addressM[11],out[12]=addressM[12],out[13]=addressM[13],out[14]=addressM[14]);
+    
+    DRegister(in[0]=u0,in[1]=u1,in[2]=u2,in[3]=u3,in[4]=u4,in[5]=u5,in[6]=u6,in[7]=u7,in[8]=u8,in[9]=u9,in[10]=u10,in[11]=u11,in[12]=u12,in[13]=u13,in[14]=u14,in[15]=u15, load=instruction[4], out[0]=d0,out[1]=d1,out[2]=d2,out[3]=d3,out[4]=d4,out[5]=d5,out[6]=d6,out[7]=d7,out[8]=d8,out[9]=d9,out[10]=d10,out[11]=d11,out[12]=d12,out[13]=d13,out[14]=d14,out[15]=d15);
+    
+    // Add a AND
+    Mux16(a[0]=a0,a[1]=a1,a[2]=a2,a[3]=a3,a[4]=a4,a[5]=a5,a[6]=a6,a[7]=a7,a[8]=a8,a[9]=a9,a[10]=a10,a[11]=a11,a[12]=a12,a[13]=a13,a[14]=a14,a[15]=a15, b[0]=inM[0],b[1]=inM[1],b[2]=inM[2],b[3]=inM[3],b[4]=inM[4],b[5]=inM[5],b[6]=inM[6],b[7]=inM[7],b[8]=inM[8],b[9]=inM[9],b[10]=inM[10],b[11]=inM[11],b[12]=inM[12],b[13]=inM[13],b[14]=inM[14],b[15]=inM[15], sel=instruction[12], out[0]=n0,out[1]=n1,out[2]=n2,out[3]=n3,out[4]=n4,out[5]=n5,out[6]=n6,out[7]=n7,out[8]=n8,out[9]=n9,out[10]=n10,out[11]=n11,out[12]=n12,out[13]=n13,out[14]=n14,out[15]=n15);
+    
+    ALU(x[0]=d0,x[1]=d1,x[2]=d2,x[3]=d3,x[4]=d4,x[5]=d5,x[6]=d6,x[7]=d7,x[8]=d8,x[9]=d9,x[10]=d10,x[11]=d11,x[12]=d12,x[13]=d13,x[14]=d14,x[15]=d15, y[0]=n0,y[1]=n1,y[2]=n2,y[3]=n3,y[4]=n4,y[5]=n5,y[6]=n6,y[7]=n7,y[8]=n8,y[9]=n9,y[10]=n10,y[11]=n11,y[12]=n12,y[13]=n13,y[14]=n14,y[15]=n15, zx=instruction[11], nx=instruction[10], zy=instruction[9], ny=instruction[8], f=instruction[7], no=instruction[6], out[0]=outM[0],out[1]=outM[1],out[2]=outM[2],out[3]=outM[3],out[4]=outM[4],out[5]=outM[5],out[6]=outM[6],out[7]=outM[7],out[8]=outM[8],out[9]=outM[9],out[10]=outM[10],out[11]=outM[11],out[12]=outM[12],out[13]=outM[13],out[14]=outM[14],out[15]=outM[15], out[0]=u0,out[1]=u1,out[2]=u2,out[3]=u3,out[4]=u4,out[5]=u5,out[6]=u6,out[7]=u7,out[8]=u8,out[9]=u9,out[10]=u10,out[11]=u11,out[12]=u12,out[13]=u13,out[14]=u14,out[15]=u15, zr=zr, ng=ng);
+    
+    // TODO: Missing load and inc
+    JUMP(j1=instruction[2], j2=instruction[1], j3=instruction[0], zr=zr, ng=ng, jump=jump0);
+    And(a=jump0, b=instruction[15], out=jump);
+    Not(in=jump, out=notjump);
+    PC(in[0]=a0,in[1]=a1,in[2]=a2,in[3]=a3,in[4]=a4,in[5]=a5,in[6]=a6,in[7]=a7,in[8]=a8,in[9]=a9,in[10]=a10,in[11]=a11,in[12]=a12,in[13]=a13,in[14]=a14,in[15]=a15, load=jump, inc=notjump, reset=reset, out[0]=pc[0],out[1]=pc[1],out[2]=pc[2],out[3]=pc[3],out[4]=pc[4],out[5]=pc[5],out[6]=pc[6],out[7]=pc[7],out[8]=pc[8],out[9]=pc[9],out[10]=pc[10],out[11]=pc[11],out[12]=pc[12],out[13]=pc[13],out[14]=pc[14]);
+    
+    And(a=instruction[3], b=instruction[15], out=writeM);
+    
 }

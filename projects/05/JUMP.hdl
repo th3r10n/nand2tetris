@@ -1,0 +1,30 @@
+CHIP JUMP {
+
+    IN  j1,
+        j2,
+        j3,
+        zr,
+        ng;          
+
+    OUT jump;          
+
+    PARTS:
+    // Put your code here:
+    // Circuit implements j1*j2*j3 + j3*zr'*ng' + j2*zr*ng' + j1*zr'*ng
+    Not(in=ng, out=notng);
+    Not(in=zr, out=notzr);
+    
+    // ng'*(j3*zr' + j2*zr)
+    And(a=j3, b=notzr, out=j3notzr); 
+    And(a=j2, b=zr, out=j2zr); 
+    Or(a=j3notzr, b=j2zr, out=or1); 
+    And(a=notng, b=or1, out=term1); 
+
+    // j1*(j2*j3 + zr'*ng)
+    And(a=j2, b=j3, out=j2j3); 
+    And(a=notzr, b=ng, out=notzrng); 
+    Or(a=j2j3, b=notzrng, out=or2); 
+    And(a=j1, b=or2, out=term2); 
+
+    Or(a=term1, b=term2, out=jump);
+}
