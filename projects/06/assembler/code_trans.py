@@ -9,19 +9,16 @@ def dest(mnemonic):
     """
     docstring
     """
-    #print("dest: " + mnemonic)
     return destination_bits[mnemonic]
 
 def comp(mnemonic):
     """
     docstring
     """
-    #print("comp:" + mnemonic)
     return computation_bits[mnemonic]
 
 def jump(mnemonic):
     """
     docstring
     """
-    #print("jump: " + mnemonic)
     return jump_bits[mnemonic]

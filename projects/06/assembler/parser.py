@@ -16,7 +16,8 @@ class Parser:
             for line in file_object:
                 line = line.strip()
                 if line and not line.startswith('//'):
-                    #print(line)
+                    if '//' in line:
+                        line = line.split('//')[0].strip()
                     lines.append(line)
         return lines
 
@@ -24,7 +25,6 @@ class Parser:
         """
         docstring
         """
-        #print(len(self.lines))
         if(len(self.lines) > 0):
             return True
         else:
