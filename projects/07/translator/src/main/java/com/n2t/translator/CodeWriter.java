@@ -183,9 +183,155 @@ public class CodeWriter {
                 + "M=D" + "\n"
                 + "@SP" + "\n"
                 + "M=M+1" + "\n";
+            }else if("local".equals(segment)){
+                commandStr = "@" + index + "\n"
+                + "D=A" + "\n"
+                + "@LCL" + "\n"
+                + "A=M" + "\n"
+                + "A=D+A" + "\n"
+                + "D=M" + "\n"
+                + "@SP" + "\n"
+                + "A=M" + "\n"
+                + "M=D" + "\n"
+                + "@SP" + "\n"
+                + "M=M+1" + "\n";
+            }else if("argument".equals(segment)){
+                commandStr = "@" + index + "\n"
+                        + "D=A" + "\n"
+                        + "@ARG" + "\n"
+                        + "A=M" + "\n"
+                        + "A=D+A" + "\n"
+                        + "D=M" + "\n"
+                        + "@SP" + "\n"
+                        + "A=M" + "\n"
+                        + "M=D" + "\n"
+                        + "@SP" + "\n"
+                        + "M=M+1" + "\n";
+            }else if("this".equals(segment)){
+                commandStr = "@" + index + "\n"
+                        + "D=A" + "\n"
+                        + "@THIS" + "\n"
+                        + "A=M" + "\n"
+                        + "A=D+A" + "\n"
+                        + "D=M" + "\n"
+                        + "@SP" + "\n"
+                        + "A=M" + "\n"
+                        + "M=D" + "\n"
+                        + "@SP" + "\n"
+                        + "M=M+1" + "\n";
+            }else if("that".equals(segment)){
+                commandStr = "@" + index + "\n"
+                        + "D=A" + "\n"
+                        + "@THAT" + "\n"
+                        + "A=M" + "\n"
+                        + "A=D+A" + "\n"
+                        + "D=M" + "\n"
+                        + "@SP" + "\n"
+                        + "A=M" + "\n"
+                        + "M=D" + "\n"
+                        + "@SP" + "\n"
+                        + "M=M+1" + "\n";
+            }else if("pointer".equals(segment)) {
+                String location = index == 0 ? "@THIS" : "@THAT";
+                commandStr = location + "\n"
+                        + "D=M" + "\n"
+                        + "@SP" + "\n"
+                        + "A=M" + "\n"
+                        + "M=D" + "\n"
+                        + "@SP" + "\n"
+                        + "M=M+1" + "\n";
+            }else if("temp".equals(segment)) {
+                commandStr = "@" + index + "\n"
+                        + "D=A" + "\n"
+                        + "@5" + "\n"
+                        + "A=D+A" + "\n"
+                        + "D=M" + "\n"
+                        + "@SP" + "\n"
+                        + "A=M" + "\n"
+                        + "M=D" + "\n"
+                        + "@SP" + "\n"
+                        + "M=M+1" + "\n";
             }
         }else if("pop".equals(command)) {
-            throw new UnsupportedOperationException();
+            if("local".equals(segment)) {
+                commandStr = "@" + index + "\n"
+                        + "D=A" + "\n"
+                        + "@LCL" + "\n"
+                        + "D=M+D" + "\n"
+                        + "@R13" + "\n"
+                        + "M=D" + "\n"
+                        + "@SP" + "\n"
+                        + "M=M-1" + "\n"
+                        + "A=M" + "\n"
+                        + "D=M" + "\n"
+                        + "@R13" + "\n"
+                        + "A=M" + "\n"
+                        + "M=D" + "\n";
+            }else if("argument".equals(segment)) {
+                commandStr = "@" + index + "\n"
+                        + "D=A" + "\n"
+                        + "@ARG" + "\n"
+                        + "D=M+D" + "\n"
+                        + "@R13" + "\n"
+                        + "M=D" + "\n"
+                        + "@SP" + "\n"
+                        + "M=M-1" + "\n"
+                        + "A=M" + "\n"
+                        + "D=M" + "\n"
+                        + "@R13" + "\n"
+                        + "A=M" + "\n"
+                        + "M=D" + "\n";
+            }else if("this".equals(segment)) {
+                commandStr = "@" + index + "\n"
+                        + "D=A" + "\n"
+                        + "@THIS" + "\n"
+                        + "D=M+D" + "\n"
+                        + "@R13" + "\n"
+                        + "M=D" + "\n"
+                        + "@SP" + "\n"
+                        + "M=M-1" + "\n"
+                        + "A=M" + "\n"
+                        + "D=M" + "\n"
+                        + "@R13" + "\n"
+                        + "A=M" + "\n"
+                        + "M=D" + "\n";
+            }else if("that".equals(segment)) {
+                commandStr = "@" + index + "\n"
+                        + "D=A" + "\n"
+                        + "@THAT" + "\n"
+                        + "D=M+D" + "\n"
+                        + "@R13" + "\n"
+                        + "M=D" + "\n"
+                        + "@SP" + "\n"
+                        + "M=M-1" + "\n"
+                        + "A=M" + "\n"
+                        + "D=M" + "\n"
+                        + "@R13" + "\n"
+                        + "A=M" + "\n"
+                        + "M=D" + "\n";
+            }else if("pointer".equals(segment)) {
+                String location = index == 0 ? "@THIS" : "@THAT";
+                commandStr = "@SP" + "\n"
+                        + "M=M-1" + "\n"
+                        + "A=M" + "\n"
+                        + "D=M" + "\n"
+                        + location + "\n"
+                        + "M=D" + "\n";
+            }else if("temp".equals(segment)) {
+                commandStr = "@" + index + "\n"
+                        + "D=A" + "\n"
+                        + "@5" + "\n"
+                        + "D=A+D" + "\n"
+                        + "@R13" + "\n"
+                        + "M=D" + "\n"
+                        + "@SP" + "\n"
+                        + "M=M-1" + "\n"
+                        + "A=M" + "\n"
+                        + "D=M" + "\n"
+                        + "@R13" + "\n"
+                        + "A=M" + "\n"
+                        + "M=D" + "\n";
+            }
         }
         try {
             myWriter.write(commandStr);
