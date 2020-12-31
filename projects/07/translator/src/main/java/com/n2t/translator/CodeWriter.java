@@ -251,6 +251,17 @@ public class CodeWriter {
                         + "M=D" + "\n"
                         + "@SP" + "\n"
                         + "M=M+1" + "\n";
+            }else if("static".equals(segment)) {
+                commandStr = "@" + index + "\n"
+                        + "D=A" + "\n"
+                        + "@16" + "\n"
+                        + "A=A+D" + "\n"
+                        + "D=M" + "\n"
+                        + "@SP" + "\n"
+                        + "A=M" + "\n"
+                        + "M=D" + "\n"
+                        + "@SP" + "\n"
+                        + "M=M+1" + "\n";
             }
         }else if("pop".equals(command)) {
             if("local".equals(segment)) {
@@ -321,6 +332,20 @@ public class CodeWriter {
                 commandStr = "@" + index + "\n"
                         + "D=A" + "\n"
                         + "@5" + "\n"
+                        + "D=A+D" + "\n"
+                        + "@R13" + "\n"
+                        + "M=D" + "\n"
+                        + "@SP" + "\n"
+                        + "M=M-1" + "\n"
+                        + "A=M" + "\n"
+                        + "D=M" + "\n"
+                        + "@R13" + "\n"
+                        + "A=M" + "\n"
+                        + "M=D" + "\n";
+            }else if("static".equals(segment)) {
+                commandStr = "@" + index + "\n"
+                        + "D=A" + "\n"
+                        + "@16" + "\n"
                         + "D=A+D" + "\n"
                         + "@R13" + "\n"
                         + "M=D" + "\n"
