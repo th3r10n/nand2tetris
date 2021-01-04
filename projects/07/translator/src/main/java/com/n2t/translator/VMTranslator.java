@@ -34,6 +34,10 @@ public class VMTranslator {
                     writer.writePushPop("push", parser.arg1(), parser.arg2());
                 }else if(parser.commandType() == CommandType.POP) {
                     writer.writePushPop("pop", parser.arg1(), parser.arg2());
+                }else if(parser.commandType() == CommandType.LABEL) {
+                    writer.writeLabel(parser.arg1());
+                }else if(parser.commandType() == CommandType.GOTO) {
+                    writer.writeGoto(parser.arg1());
                 }
             }
             writer.close();

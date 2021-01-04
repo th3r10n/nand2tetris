@@ -365,6 +365,29 @@ public class CodeWriter {
         }
     }
 
+    public void writeLabel(String label) {
+        String commandStr = "(" + label + ")" + "\n";
+        try {
+            myWriter.write(commandStr);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writeGoto(String label) {
+        String commandStr = "@SP" + "\n"
+            + "M=M-1" + "\n"
+            + "A=M" + "\n"
+            + "D=M" + "\n"
+            + "@" + label + "\n"
+            + "D;JNE" + "\n";
+        try {
+            myWriter.write(commandStr);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void close() {
         try {
             myWriter.close();
