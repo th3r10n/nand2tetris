@@ -374,7 +374,7 @@ public class CodeWriter {
         }
     }
 
-    public void writeGoto(String label) {
+    public void writeIf(String label) {
         String commandStr = "@SP" + "\n"
             + "M=M-1" + "\n"
             + "A=M" + "\n"

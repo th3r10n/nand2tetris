@@ -48,7 +48,7 @@ public class Parser {
         }else if(currentCommand.startsWith("label")) {
             commandType = CommandType.LABEL;
         }else if(currentCommand.startsWith("if-goto")) {
-            commandType = CommandType.GOTO;
+            commandType = CommandType.IF;
         }
         return commandType;
     }
@@ -57,7 +57,7 @@ public class Parser {
         String arg1 = "";
         if(commandType() == CommandType.ARITHMETIC) {
             arg1 = currentCommand;
-        }else if(commandType() == CommandType.PUSH || commandType() == CommandType.POP || commandType() == CommandType.LABEL || commandType() == CommandType.GOTO) {
+        }else if(commandType() == CommandType.PUSH || commandType() == CommandType.POP || commandType() == CommandType.LABEL || commandType() == CommandType.IF || commandType() == CommandType.GOTO) {
             arg1 = currentCommand.split(" ")[1];
         }
         return arg1;

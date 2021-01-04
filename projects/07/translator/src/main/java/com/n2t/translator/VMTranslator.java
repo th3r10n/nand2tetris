@@ -1,12 +1,8 @@
 package com.n2t.translator;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Scanner;
 import java.util.logging.Logger;
-import java.util.logging.Level;
 
 public class VMTranslator {
     public static void main(String... args) {
@@ -36,8 +32,8 @@ public class VMTranslator {
                     writer.writePushPop("pop", parser.arg1(), parser.arg2());
                 }else if(parser.commandType() == CommandType.LABEL) {
                     writer.writeLabel(parser.arg1());
-                }else if(parser.commandType() == CommandType.GOTO) {
-                    writer.writeGoto(parser.arg1());
+                }else if(parser.commandType() == CommandType.IF) {
+                    writer.writeIf(parser.arg1());
                 }
             }
             writer.close();
