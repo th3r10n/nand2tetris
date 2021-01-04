@@ -47,6 +47,8 @@ public class Parser {
             commandType = CommandType.POP;
         }else if(currentCommand.startsWith("label")) {
             commandType = CommandType.LABEL;
+        }else if(currentCommand.startsWith("goto")) {
+            commandType = CommandType.GOTO;
         }else if(currentCommand.startsWith("if-goto")) {
             commandType = CommandType.IF;
         }

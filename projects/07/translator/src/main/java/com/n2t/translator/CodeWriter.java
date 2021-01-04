@@ -374,6 +374,16 @@ public class CodeWriter {
         }
     }
 
+    public void writeGoto(String label) {
+        String commandStr = "@" + label + "\n"
+                + "0;JMP" + "\n";
+        try {
+            myWriter.write(commandStr);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void writeIf(String label) {
         String commandStr = "@SP" + "\n"
             + "M=M-1" + "\n"
