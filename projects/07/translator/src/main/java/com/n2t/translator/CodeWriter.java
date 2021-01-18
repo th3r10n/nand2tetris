@@ -8,6 +8,7 @@ public class CodeWriter {
     private FileWriter myWriter;
     private int label_counter = 0;
     private String label_id = "";
+    private String fileName;
 
     public CodeWriter(String output) {
         try {
@@ -19,7 +20,7 @@ public class CodeWriter {
     }
 
     public void setFileName(String fileName) {
-        throw new UnsupportedOperationException();
+        this.fileName = fileName.substring(0, fileName.lastIndexOf(".vm"));;
     }
 
     public void writeArithmetic(String command) {
@@ -391,6 +392,87 @@ public class CodeWriter {
             + "D=M" + "\n"
             + "@" + label + "\n"
             + "D;JNE" + "\n";
+        try {
+            myWriter.write(commandStr);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public  void writeFunction(String functionName, int numLocals) {
+        String commandStr = "(" + functionName + ")" + "\n";
+        String pushStr = "@SP" + "\n"
+                + "A=M" + "\n"
+                + "M=0" + "\n"
+                + "@SP" + "\n"
+                + "M=M+1" + "\n";
+
+        for(int i=0; i < numLocals; i++) {
+            commandStr = commandStr + pushStr;
+        }
+
+        try {
+            myWriter.write(commandStr);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writeReturn() {
+        //R13=FRAME
+        //R14=RET
+        String commandStr =
+            "@LCL" + "\n" //FRAME=LCL
+            + "D=M" + "\n"
+            + "@R13" + "\n"
+            + "M=D" + "\n"
+            //RET=*(FRAME-5)
+            + "D=M" + "\n"
+            + "@5" + "\n"
+            + "A=D-A" + "\n"
+            + "D=M" + "\n"
+            + "@R14" + "\n"
+            + "M=D" + "\n"
+            //*ARG=pop()
+            + "@SP" + "\n"
+            + "M-M-1" + "\n"
+            + "A=M" + "\n"
+            + "D=M" + "\n"
+            + "@ARG" + "\n"
+            + "M=D" + "\n"
+            //SP=ARG+1
+            + "@ARG" + "\n"
+            + "D=A+1" + "\n"
+            + "@SP" + "\n"
+            + "M=D" + "\n"
+            //THAT=*(FRAME-1)
+            + "@R13" + "\n"
+            + "D=A" + "\n"
+            + "@2" + "\n"
+            + "A=D-A" + "\n"
+            + "D=M" + "\n"
+            + "@THIS" + "\n"
+            + "M=D" + "\n"
+            //ARG=*(FRAME-3)
+            + "@R13" + "\n"
+            + "D=A" + "\n"
+            + "@3" + "\n"
+            + "A=D-A" + "\n"
+            + "D=M" + "\n"
+            + "@ARG" + "\n"
+            + "M=D" + "\n"
+            //LCL=*(FRAME-4)
+            + "@R13" + "\n"
+            + "D=A" + "\n"
+            + "@4" + "\n"
+            + "A=D-A" + "\n"
+            + "D=M" + "\n"
+            + "@LCL" + "\n"
+            + "M=D" + "\n"
+            //goto RET
+            + "@RET" + "\n"
+            + "0;JMP" + "\n";
+
         try {
             myWriter.write(commandStr);
         } catch (IOException e) {

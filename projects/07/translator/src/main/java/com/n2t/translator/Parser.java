@@ -51,6 +51,12 @@ public class Parser {
             commandType = CommandType.GOTO;
         }else if(currentCommand.startsWith("if-goto")) {
             commandType = CommandType.IF;
+        }else if(currentCommand.startsWith("function")) {
+            commandType = CommandType.FUNCTION;
+        }else if(currentCommand.startsWith("call")) {
+            commandType = CommandType.CALL;
+        }else if(currentCommand.startsWith("return")) {
+            commandType = CommandType.RETURN;
         }
         return commandType;
     }
@@ -59,7 +65,7 @@ public class Parser {
         String arg1 = "";
         if(commandType() == CommandType.ARITHMETIC) {
             arg1 = currentCommand;
-        }else if(commandType() == CommandType.PUSH || commandType() == CommandType.POP || commandType() == CommandType.LABEL || commandType() == CommandType.IF || commandType() == CommandType.GOTO) {
+        }else if(commandType() == CommandType.PUSH || commandType() == CommandType.POP || commandType() == CommandType.LABEL || commandType() == CommandType.IF || commandType() == CommandType.GOTO || commandType() == CommandType.FUNCTION || commandType() == CommandType.FUNCTION) {
             arg1 = currentCommand.split(" ")[1];
         }
         return arg1;

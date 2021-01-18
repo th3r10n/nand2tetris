@@ -22,6 +22,8 @@ public class VMTranslator {
 
             Parser parser = new Parser(sourceFileName);
             CodeWriter writer = new CodeWriter(outputFileName);
+            writer.setFileName(sourceFileName);
+
             while(parser.hasMoreCommands()) {
                 parser.advance();
                 if(parser.commandType() == CommandType.ARITHMETIC) {
@@ -36,6 +38,10 @@ public class VMTranslator {
                     writer.writeGoto(parser.arg1());
                 }else if(parser.commandType() == CommandType.IF) {
                     writer.writeIf(parser.arg1());
+                }else if(parser.commandType() == CommandType.FUNCTION) {
+                    writer.writeFunction(parser.arg1(), parser.arg2());
+                }else if(parser.commandType() == CommandType.RETURN) {
+                    writer.writeReturn();
                 }
             }
             writer.close();
