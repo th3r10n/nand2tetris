@@ -65,7 +65,7 @@ public class Parser {
         String arg1 = "";
         if(commandType() == CommandType.ARITHMETIC) {
             arg1 = currentCommand;
-        }else if(commandType() == CommandType.PUSH || commandType() == CommandType.POP || commandType() == CommandType.LABEL || commandType() == CommandType.IF || commandType() == CommandType.GOTO || commandType() == CommandType.FUNCTION || commandType() == CommandType.FUNCTION) {
+        }else if(commandType() == CommandType.PUSH || commandType() == CommandType.POP || commandType() == CommandType.LABEL || commandType() == CommandType.IF || commandType() == CommandType.GOTO || commandType() == CommandType.FUNCTION || commandType() == CommandType.CALL) {
             arg1 = currentCommand.split(" ")[1];
         }
         return arg1;
