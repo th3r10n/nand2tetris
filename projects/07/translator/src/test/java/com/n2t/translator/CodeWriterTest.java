@@ -111,4 +111,18 @@ class CodeWriterTest {
         writer.writePushPop("pop", "temp", 2);
         writer.close();
     }
+
+    @Test
+    void testWriteLabel() {
+        CodeWriter writer = new CodeWriter("Label.asm");
+        writer.writeLabel("MAIN_LOOP");
+        writer.close();
+    }
+
+    @Test
+    void testWriteFunction() {
+        CodeWriter writer = new CodeWriter("Function.asm");
+        writer.writeFunction("mult", 5);
+        writer.close();
+    }
 }

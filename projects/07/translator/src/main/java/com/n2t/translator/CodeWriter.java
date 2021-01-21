@@ -435,19 +435,27 @@ public class CodeWriter {
             + "M=D" + "\n"
             //*ARG=pop()
             + "@SP" + "\n"
-            + "M-M-1" + "\n"
+            + "M=M-1" + "\n"
             + "A=M" + "\n"
             + "D=M" + "\n"
             + "@ARG" + "\n"
+            + "A=M" + "\n"
             + "M=D" + "\n"
             //SP=ARG+1
             + "@ARG" + "\n"
-            + "D=A+1" + "\n"
+            + "D=M+1" + "\n"
             + "@SP" + "\n"
             + "M=D" + "\n"
             //THAT=*(FRAME-1)
             + "@R13" + "\n"
-            + "D=A" + "\n"
+            + "D=M" + "\n"
+            + "A=D-1" + "\n"
+            + "D=M" + "\n"
+            + "@THAT" + "\n"
+            + "M=D" + "\n"
+            //THIS=*(FRAME-2)
+            + "@R13" + "\n"
+            + "D=M" + "\n"
             + "@2" + "\n"
             + "A=D-A" + "\n"
             + "D=M" + "\n"
@@ -455,7 +463,7 @@ public class CodeWriter {
             + "M=D" + "\n"
             //ARG=*(FRAME-3)
             + "@R13" + "\n"
-            + "D=A" + "\n"
+            + "D=M" + "\n"
             + "@3" + "\n"
             + "A=D-A" + "\n"
             + "D=M" + "\n"
@@ -463,15 +471,83 @@ public class CodeWriter {
             + "M=D" + "\n"
             //LCL=*(FRAME-4)
             + "@R13" + "\n"
-            + "D=A" + "\n"
+            + "D=M" + "\n"
             + "@4" + "\n"
             + "A=D-A" + "\n"
             + "D=M" + "\n"
             + "@LCL" + "\n"
             + "M=D" + "\n"
             //goto RET
-            + "@RET" + "\n"
+            + "@R14" + "\n"
+            + "A=M" + "\n"
             + "0;JMP" + "\n";
+
+        try {
+            myWriter.write(commandStr);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writeCall(String functionName, int numArgs) {
+        String retAddr = functionName + "_$RET_ADDR$";
+        String argShift = String.valueOf(numArgs + 5);
+        String commandStr = //push return-address
+            "@" + retAddr + "\n"
+            + "D=A" + "\n"
+            + "@SP" + "\n"
+            + "A=M" + "\n"
+            + "M=D" + "\n"
+            + "@SP" + "\n"
+            + "M=M+1" + "\n"
+            //push  LCL
+            + "@LCL" + "\n"
+            + "D=M" + "\n"
+            + "@SP" + "\n"
+            + "A=M" + "\n"
+            + "M=D" + "\n"
+            + "@SP" + "\n"
+            + "M=M+1" + "\n"
+            //push ARG
+            + "@ARG" + "\n"
+            + "D=M" + "\n"
+            + "@SP" + "\n"
+            + "A=M" + "\n"
+            + "M=D" + "\n"
+            + "@SP" + "\n"
+            + "M=M+1" + "\n"
+            //push THIS
+            + "@THIS" + "\n"
+            + "D=M" + "\n"
+            + "@SP" + "\n"
+            + "A=M" + "\n"
+            + "M=D" + "\n"
+            + "@SP" + "\n"
+            + "M=M+1" + "\n"
+            //push THAT
+            + "@THAT" + "\n"
+            + "D=M" + "\n"
+            + "@SP" + "\n"
+            + "A=M" + "\n"
+            + "M=D" + "\n"
+            + "@SP" + "\n"
+            + "M=M+1" + "\n"
+            //ARG=SP-n-5
+            + "@SP" + "\n"
+            + "D=M" + "\n"
+            + "@" + argShift + "\n"
+            + "D=D-A" + "\n"
+            + "@ARG" + "\n"
+            + "M=D" + "\n"
+            //LCL=SP
+            + "@SP" + "\n"
+            + "D=M" + "\n"
+            + "@LCL" + "\n"
+            + "M=D" + "\n"
+            //goto f
+            + "@" + functionName + "\n"
+            + "0;JMP" + "\n"
+            + "(" + retAddr + ")" + "\n";
 
         try {
             myWriter.write(commandStr);
