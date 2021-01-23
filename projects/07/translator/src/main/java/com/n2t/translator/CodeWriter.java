@@ -23,6 +23,19 @@ public class CodeWriter {
         this.fileName = fileName.substring(0, fileName.lastIndexOf(".vm"));;
     }
 
+    public void writeInit() {
+        String commandStr = "@256" + "\n"
+                + "D=A" + "\n"
+                + "@SP" + "\n"
+                + "M=D" + "\n";
+
+        try {
+            myWriter.write(commandStr);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void writeArithmetic(String command) {
         String commandStr = "";
 
@@ -253,7 +266,7 @@ public class CodeWriter {
                         + "@SP" + "\n"
                         + "M=M+1" + "\n";
             }else if("static".equals(segment)) {
-                commandStr = "@" + index + "\n"
+                commandStr = "@" + fileName + "." + index + "\n"
                         + "D=A" + "\n"
                         + "@16" + "\n"
                         + "A=A+D" + "\n"
@@ -344,7 +357,7 @@ public class CodeWriter {
                         + "A=M" + "\n"
                         + "M=D" + "\n";
             }else if("static".equals(segment)) {
-                commandStr = "@" + index + "\n"
+                commandStr = "@" +  fileName + "." + index + "\n"
                         + "D=A" + "\n"
                         + "@16" + "\n"
                         + "D=A+D" + "\n"

@@ -28,6 +28,10 @@ public class VMTranslator {
                         return s.toLowerCase().endsWith(".vm");
                     });
                     writer = new CodeWriter(outputFileName);
+                    // Bootstrap code
+                    writer.writeInit();
+                    writer.writeCall("Sys.init", 0);
+
                     for(int i = 0; i < sourceFiles.length; i++) {
                         logger.info("sourceFiles[" + i + "]:" + sourceFiles[i]);
                         parser = new Parser(inputSource + "/" + sourceFiles[i]);
