@@ -20,10 +20,17 @@ public class Parser {
             while(source.hasNextLine()) {
                 String line = source.nextLine().trim();
                 if(!line.isEmpty() && !line.startsWith("//")) {
+                    if(line.contains("//")) {
+                        line = line.split("//")[0].trim();
+                    }
                     linesOfCode.add(line);
                 }
             }
             this.linesIterator = linesOfCode.iterator();
+    }
+
+    public String getCurrentCommand() {
+        return this.currentCommand;
     }
 
     public boolean hasMoreCommands() {

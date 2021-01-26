@@ -39,6 +39,7 @@ public class VMTranslator {
                         //
                         while(parser.hasMoreCommands()) {
                             parser.advance();
+                            writer.writeVMCommand(parser.getCurrentCommand());
                             if(parser.commandType() == CommandType.ARITHMETIC) {
                                 writer.writeArithmetic(parser.arg1());
                             }else if(parser.commandType() == CommandType.PUSH) {

@@ -9,6 +9,8 @@ public class CodeWriter {
     private int label_counter = 0;
     private String label_id = "";
     private String fileName;
+    // This will be used to generate the labels inside a function.
+    private String functionName = "";
 
     public CodeWriter(String output) {
         try {
@@ -380,7 +382,7 @@ public class CodeWriter {
     }
 
     public void writeLabel(String label) {
-        String commandStr = "(" + label + ")" + "\n";
+        String commandStr = "(" + this.functionName + "$" + label + ")" + "\n";
         try {
             myWriter.write(commandStr);
         } catch (IOException e) {
@@ -389,7 +391,7 @@ public class CodeWriter {
     }
 
     public void writeGoto(String label) {
-        String commandStr = "@" + label + "\n"
+        String commandStr = "@" + this.functionName + "$" + label + "\n"
                 + "0;JMP" + "\n";
         try {
             myWriter.write(commandStr);
@@ -403,7 +405,7 @@ public class CodeWriter {
             + "M=M-1" + "\n"
             + "A=M" + "\n"
             + "D=M" + "\n"
-            + "@" + label + "\n"
+            + "@" + this.functionName + "$" + label + "\n"
             + "D;JNE" + "\n";
         try {
             myWriter.write(commandStr);
@@ -413,6 +415,7 @@ public class CodeWriter {
     }
 
     public  void writeFunction(String functionName, int numLocals) {
+        this.functionName = functionName;
         String commandStr = "(" + functionName + ")" + "\n";
         String pushStr = "@SP" + "\n"
                 + "A=M" + "\n"
@@ -495,6 +498,7 @@ public class CodeWriter {
             + "A=M" + "\n"
             + "0;JMP" + "\n";
 
+        label_counter += 1;
         try {
             myWriter.write(commandStr);
         } catch (IOException e) {
@@ -503,7 +507,7 @@ public class CodeWriter {
     }
 
     public void writeCall(String functionName, int numArgs) {
-        String retAddr = functionName + "_$RET_ADDR$";
+        String retAddr = functionName + "_$RET_ADDR$" + label_counter;
         String argShift = String.valueOf(numArgs + 5);
         String commandStr = //push return-address
             "@" + retAddr + "\n"
@@ -562,8 +566,18 @@ public class CodeWriter {
             + "0;JMP" + "\n"
             + "(" + retAddr + ")" + "\n";
 
+        label_counter += 1;
+
         try {
             myWriter.write(commandStr);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writeVMCommand(String vmCommandStr) {
+        try {
+            myWriter.write("// " + vmCommandStr + "\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
